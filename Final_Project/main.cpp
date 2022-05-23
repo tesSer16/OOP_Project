@@ -38,6 +38,7 @@ int main() {
 				mine_array.emplace_back(make_tuple(mine_x, mine_y));
 				board[mine_x][mine_y] = -1;
 				break;
+				cout << "wow" << endl;
 			}
 		}
 	}
