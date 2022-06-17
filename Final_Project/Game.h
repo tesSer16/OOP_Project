@@ -1,5 +1,7 @@
 #pragma once
-#include "Player.h"
+#include "Login.h"
+#include <conio.h>
+#include "Color.h"
 
 class Game {
 protected:

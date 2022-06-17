@@ -1,6 +1,7 @@
 #pragma once
 #include "Card.h"
 #include "Game.h"
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -14,7 +15,7 @@ private:
 	Card dealFirstCard;
 	vector<Card> myCards;
 	vector<Card> dealCards;
-	Card* deck; // 104 cards, 2 sets
+	Card* deck; // 52 cards, 1 set
 
 	int hit();
 	int stand();

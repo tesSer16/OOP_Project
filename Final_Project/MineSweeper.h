@@ -5,7 +5,6 @@
 #include <ctime>
 #include <iostream>
 #include <random>
-#include <windows.h>
 
 using namespace std;
 
@@ -29,7 +28,7 @@ private:
 	void clear();
 	void check(int x, int y);
 	void blankCheck(int x, int y);
-	void consolePrint();
+	void consolePrint(int, int);
 public:
 	MineSweeper(Player);
 	~MineSweeper();

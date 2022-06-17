@@ -1,6 +1,4 @@
 #include "BlackJack.h"
-#include <iostream>
-#include <conio.h>
 
 int BlackJack::hit() {
 	myCards.push_back(deck[deckIndex++]);
@@ -39,35 +37,58 @@ int BlackJack::result() {
 	while (mySum < 22 && dealSum <= 17) {
 		dealCards.push_back(deck[deckIndex++]);
 		dealSum = calSum(dealCards);
+
 		consolePrint(1);
+		printSystem();
 		cout << "Press <Enter> to Continue..." << endl;
+
 		cin.get();
 		cin.get();
 	}
 	consolePrint(1);
 
 	if (mySum > 21) {
+		printSystem();
 		cout << "Bust!" << endl;
-		cout << "You lose " << betting << " coins!" << endl;
+		printSystem();
+		cout << "You lose ";
+		printNum(betting);
+		cout << " coins!" << endl;
 	}
 	else if (mySum == dealSum) {
 		val = betting;
+		printSystem();
 		cout << "Push!" << endl;
-		cout << "You get back your betting: " << val << endl;
+		printSystem();
+		cout << "You get back your betting: ";
+		printNum(val);
+		cout << endl;
 	}
 	else if (mySum == 21 && myCards.size() == 2) {
 		val = betting * 5 / 2;
+		printSystem();
 		cout << "BlackJack!!!" << endl;
-		cout << "You get " << val << " coins!(x2.5)" << endl;
+		printSystem();
+		cout << "You get ";
+		printNum(val); 
+		cout << " coins!(x2.5)" << endl;
 	}
 	else if (dealSum > 21 || mySum > dealSum) {
 		val = betting * 2;
+		printSystem();
 		cout << "You Win!!" << endl;
-		cout << "You get " << betting << " coins!(x2)" << endl;
+		printSystem();
+		cout << "You get ";
+		printNum(val);
+		cout << " coins!(x2)" << endl;
 	}
 	else {
+		printSystem();
 		cout << "You lose!" << endl;
-		cout << "You lose " << betting << " coins!" << endl;
+		printSystem();
+		cout << "You lose ";
+		printNum(betting);
+		cout << " coins!" << endl;
 	}
 	
 	cin.get();
@@ -78,7 +99,12 @@ int BlackJack::result() {
 
 void BlackJack::consolePrint(int r = 0) {
 	system("cls");
-	cout << "[Your coins: " << user.coins << ", Your betting: " << betting << "]" << endl;
+	cout << "[Your coins: ";
+	printNum(user.coins);
+	cout << ", Your betting: ";
+	printNum(betting);
+	cout << "]" << endl;
+
 	cout << "Dealer's sum: " << dealSum << endl;
 	cout << endl;
 
@@ -107,17 +133,44 @@ void BlackJack::consolePrint(int r = 0) {
 }
 
 int BlackJack::askOptions() {
-	int input;
+	int inputIndex = 0;
+	string optionStrings[3] = { ". hit", ". stand", ". doubleDown" };
+	int optionCount = myCards.size() < 3 ? 3 : 2;
+	char c;
 	while (1) {
-		if (myCards.size() < 3)
-			cout << "1: hit, 2: stand, 3: doubleDown" << endl;
-		else
-			cout << "1: hit, 2: stand" << endl;
-		cout << ">>> ";
-		cin >> input;
-		if (input > 0 && input < 4) break;
+		consolePrint();
+		for (int i = 0; i < optionCount; i++) {
+			if (i == inputIndex) {
+				setColor(0 | (15 << 4));
+				cout << ">";
+			}				
+			cout << i + 1 << optionStrings[i];
+			setColor(15);
+			cout << "      ";
+		}
+		cout << endl;
+		while (1) {
+			if (_kbhit()) {
+				c = _getch();
+				if (c == -32) {
+					c = _getch();
+					// left arrow
+					if (c == 75 && inputIndex > 0) { 
+						inputIndex--;
+						break;
+					}
+					// right arrow
+					else if (c == 77 && inputIndex < optionCount - 1) {
+						inputIndex++;
+						break;
+					}						
+				}
+				else if (c == 13) {
+					return inputIndex;
+				}
+			}			
+		}
 	}
-	return input - 1;
 }
 
 int BlackJack::calSum(vector<Card> v) {
@@ -160,14 +213,21 @@ void BlackJack::run() {
 	// input betting
 	while (1) {
 		system("cls");
-		cout << "[Your coins: " << user.coins << "]" << endl;
+		cout << "[Your coins: ";
+		printNum(user.coins);
+		cout << "]" << endl;
+
+		printSystem();
 		cout << "Please input your betting" << endl;
 		cout << ">>> ";
 		cin >> betting;
+
 		if (betting <= user.coins) {
 			user.coins -= betting;
 			break;
 		}
+
+		printSystem();
 		cout << "You don't have enough coins!" << endl;
 		cin.get();
 		cin.get();

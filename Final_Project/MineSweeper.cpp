@@ -97,15 +97,14 @@ void MineSweeper::calNum(int x, int y) {
 			}
 		}
 	}
-	// cout << endl;
 }
 
-void MineSweeper::consolePrint() {
+void MineSweeper::consolePrint(int x = 0, int y = 0) {
 	// clear console screen and print each blocks if it is checked
 	system("cls");
 
 	// horizontal coordinate number print
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+	setColor(11);
 	if (size > 10) {
 		cout << "   ";
 		for (int i = 0; i < size; i++) {
@@ -122,33 +121,43 @@ void MineSweeper::consolePrint() {
 	}
 	cout << endl;
 
-
+	int val1 = 1, val2 = 0;
 	for (int i = 0; i < size; i++) {
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+		setColor(11);
 		if (i > 9)
 			cout << i << " ";
 		else
 			cout << " " << i << " ";
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		setColor(15);
 		for (int j = 0; j < size; j++) {
+			if (i == x && j == y) {
+				val1 = 0;
+				val2 = 1;
+			}
 			if (!checked[i][j]) {
+				setColor(15 * val1 + 11 * val2);
 				cout << "¡á ";
 			}
 			else if (checked[i][j] == 2) {
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+				setColor(12 * val1 + 11 * val2);
 				cout << "¢Ò ";
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				
 			}
 			else {
 				if (board[i][j] >= 0) {
-					cout << board[i][j] << " ";
+					setColor(15 * val1 + 11 * val2);
+					cout << board[i][j];
+					setColor(15);
+					cout << " ";
 				}
 				else {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+					setColor(12);
 					cout << "¡Ø ";
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 				}
 			}
+			setColor(15);
+			val1 = 1;
+			val2 = 0;
 		}
 		if (i == 1) {
 			cout << "\t\tMine : " << mineCount - flagCount << " / " << mineCount;
@@ -196,13 +205,9 @@ void MineSweeper::explode() {
 	}
 	cout << endl;
 	cout << "---------------------------------------------------------------------------------------" << endl;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-	cout << "[System]";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	printSystem();
 	cout << " MINE EXPLODED!!!..." << endl;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-	cout << "[System]";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	printSystem();
 	cout << " Press any button to try again." << endl;
 }
 
@@ -235,17 +240,13 @@ void MineSweeper::clear(){
 	// time calculating (edit required)
 	clock_t end = clock();
 	double time = (double) ((double) end - start) / CLOCKS_PER_SEC;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-	cout << "[System]";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	printSystem();
 	cout << " Game Clear!" << endl;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-	cout << "[System]";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	printSystem();
 	cout << " During time : ";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+	setColor(10);
 	cout << time;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	setColor(15);
 	cout << " (s)" << endl;
 }
 
@@ -262,64 +263,72 @@ void MineSweeper::run() {
 	start = clock();
 
 	// game start
+	int x = 0, y = 0;
+	char c;
 	while (1) {
 		if (checkCount == goal) {
 			clear();
 			break;
 		}
 
-		consolePrint();
-		// mode input
+		consolePrint(x, y);
 		cout << "-------------------------------------------" << endl;
-		int x, y;
-		int usertype;
+		cout << "Press the button on each blocks (1: check mine / 2: flag up / 3: cancel flag)" << endl;
 
-		cout << "Please input type (1 = check mine / 2 = flag up / 3 = cancel flag) -> ";
-		cin >> usertype;
-
-		if (usertype == 1) {
-			try {
-				cout << "Please input x, y coordinate (ex: 3 4)-> ";
-				cin >> x >> y;
-				if (x < 0 || x >= size || y < 0 || y >= size) {
-					throw exception("out of range!");
+		// keyboard input	
+		while (1) {
+			if (_kbhit()) {
+				c = _getch();
+				if (c == -32) {
+					c = _getch();
+					// up
+					if (c == 72 && x > 0) {
+						x--;
+						break;
+					}
+					// right
+					else if (c == 77 && y < size - 1) {
+						y++;
+						break;
+					}
+					// down
+					else if (c == 80 && x < size - 1) {
+						x++;
+						break;
+					}
+					// left
+					else if (c == 75 && y > 0) {
+						y--;
+						break;
+					}
 				}
-				else if (checked[x][y]) {
-					throw exception("already checked!");
+				// 1: check mine
+				else if (c == 49) {
+					if (board[x][y] == 0) {
+						blankCheck(x, y);
+					}
+					else if (board[x][y] == -1) {
+						checked[x][y] = 1;
+						explode();
+						return;
+					}
+					else check(x, y);
+					break;
 				}
-			}
-			catch (exception error) {
-				cout << "Invalid Input!";
-				cin.get();
-				cin.get();
-				continue;
-			}
 
-			if (board[x][y] == 0) {
-				blankCheck(x, y);
-				continue;
-			}
-			else if (board[x][y] == -1) {
-				checked[x][y] = 1;
-				explode();
-				break;
-			}
-			else check(x, y);
-		}
-		else if (usertype == 2) {
-			cout << "Please input x, y coordinate (ex: 3 4) -> ";
-			cin >> x >> y;
-			if (checked[x][y] == 0) {
-				checked[x][y] = 2;
-				flagCount += 1;
-			}
-		}
-		if (usertype == 3) {
-			cout << "Please input x, y coordinate (ex: 3 4) -> ";
-			cin >> x >> y;
-			if (checked[x][y] == 2) {
-				checked[x][y] = 0;
-				flagCount -= 1;
+				// 2. flag up
+				else if (c == 50 && checked[x][y] == 0) {
+					checked[x][y] = 2;
+					flagCount += 1;
+					break;
+				}
+
+				// 3. flag down
+				else if (c == 51 && checked[x][y] == 2) {
+					checked[x][y] = 0;
+					flagCount -= 1;
+					break;
+				}
 			}
 		}
 	}
