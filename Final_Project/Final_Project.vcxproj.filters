@@ -32,20 +32,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MineSweeper.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackJack.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Card.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MineSweeper.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackJack.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

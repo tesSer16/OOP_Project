@@ -1,11 +1,9 @@
 #pragma once
 #include <string>
 
-class Player {
-private:
-	int coins;
-	string userID;
-public:
-	void loadData();
-	void changeCoins();
+using namespace std;
+
+struct Player {
+	int coins = 0;
+	string userID = "";
 };

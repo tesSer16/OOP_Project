@@ -2,10 +2,12 @@
 #include "Player.h"
 
 class Game {
-private:
+protected:
 	Player user;
-public:
-	Game(Player);
+public: 
+	Game(Player u) {
+		user = u;
+	}
 	virtual void run() = 0;
 	virtual void saveData() = 0;
 	virtual void quit() = 0;

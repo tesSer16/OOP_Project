@@ -1,26 +1,35 @@
 #pragma once
 #include "Card.h"
 #include "Game.h"
+#include <vector>
+
+using namespace std;
 
 class BlackJack : public Game{
 private:
 	int betting;
-	Card* myCards;
-	Card* dealCards;
-	Card* deck;
+	int mySum;
+	int dealSum;
+	int deckIndex;
+	Card dealFirstCard;
+	vector<Card> myCards;
+	vector<Card> dealCards;
+	Card* deck; // 104 cards, 2 sets
 
-	void hit();
-	void stand();
-	void doubleDown();
-	void surrender();
-	void checkEnd();
-	void consolePrint();
+	int hit();
+	int stand();
+	int doubleDown();
+	int split();
+	int result();
+	void consolePrint(int);
+	int askOptions();
+	int calSum(vector<Card>);
 public:
-	BlackJack(Player);
+	BlackJack(Player u);
 	void run();
-	void saveDate();
+	void saveData();
 	void quit();
 	void help();
 
-	void (BlackJack::*options[4])() = { hit, stand, doubleDown, surrender };
+	int (BlackJack::* options[4])();
 };

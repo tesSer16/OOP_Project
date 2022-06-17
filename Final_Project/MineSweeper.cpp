@@ -148,7 +148,7 @@ void MineSweeper::clear(){
 
 	// time calculating (edit required)
 	clock_t end = clock();
-	double time = (double) (end - start) / CLOCKS_PER_SEC;
+	double time = (double) ((double) end - start) / CLOCKS_PER_SEC;
 	cout << "CLEAR!" << endl<< "During time : " << time << endl;
 }
 

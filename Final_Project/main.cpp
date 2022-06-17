@@ -8,9 +8,11 @@ using namespace std;
 
 int main() {	
 	//MineSweeper minesweeper;
-	//
 	//minesweeper.run();
-	BlackJack blackjack;
+	Player temp;
+	temp.coins = 12;
+	temp.userID = "123123";
+	BlackJack blackjack(temp);
 
 	blackjack.run();
 }
