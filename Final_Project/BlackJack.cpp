@@ -152,6 +152,10 @@ BlackJack::BlackJack(Player u) : Game(u) {
 	options[3] = &BlackJack::split;
 }
 
+BlackJack::~BlackJack() {
+	delete[] deck;
+}
+
 void BlackJack::run() {
 	// input betting
 	while (1) {
@@ -199,10 +203,6 @@ void BlackJack::run() {
 }
 
 void BlackJack::saveData() {
-
-}
-
-void BlackJack::quit() {
 
 }
 

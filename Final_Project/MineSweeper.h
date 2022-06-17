@@ -1,15 +1,21 @@
 #pragma once
+#include "Game.h"
 #include <vector>
 #include <tuple>
 #include <ctime>
+#include <iostream>
+#include <random>
+#include <windows.h>
+
 using namespace std;
 
-class MineSweeper {
+class MineSweeper : public Game{
 private:
 	// member variables
 	int size;
 	int mineCount;
 	int checkCount;
+	int flagCount;
 	int goal;
 	int** board;
 	int** checked;
@@ -25,8 +31,10 @@ private:
 	void blankCheck(int x, int y);
 	void consolePrint();
 public:
-	MineSweeper();
+	MineSweeper(Player);
 	~MineSweeper();
 	
-	void run();  // input Player object
+	void run();
+	void saveData();
+	void help();
 };

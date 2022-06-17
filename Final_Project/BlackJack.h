@@ -26,9 +26,10 @@ private:
 	int calSum(vector<Card>);
 public:
 	BlackJack(Player u);
+	~BlackJack();
+
 	void run();
 	void saveData();
-	void quit();
 	void help();
 
 	int (BlackJack::* options[4])();

@@ -6,13 +6,12 @@
 
 using namespace std;
 
-int main() {	
-	//MineSweeper minesweeper;
-	//minesweeper.run();
+int main() {
 	Player temp;
-	temp.coins = 12;
-	temp.userID = "123123";
-	BlackJack blackjack(temp);
 
-	blackjack.run();
+	MineSweeper minesweeper(temp);
+	minesweeper.run();
+	
+	/*BlackJack blackjack(temp);
+	blackjack.run();*/
 }
