@@ -1,0 +1,4 @@
+<Duel>
+[How to win]
+You and your opponent each pick one card, and the person with the higher number wins.
+Good luck!

@@ -1,8 +1,6 @@
 #pragma once
 #include "Card.h"
 #include "Game.h"
-#include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -26,12 +24,10 @@ private:
 	int askOptions();
 	int calSum(vector<Card>);
 public:
-	BlackJack(Player u);
+	BlackJack(Player&);
 	~BlackJack();
 
-	void run();
-	void saveData();
-	void help();
+	int run();
 
 	int (BlackJack::* options[4])();
 };

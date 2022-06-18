@@ -1,9 +1,7 @@
 #pragma once
 #include "Game.h"
-#include <vector>
 #include <tuple>
 #include <ctime>
-#include <iostream>
 #include <random>
 
 using namespace std;
@@ -30,10 +28,8 @@ private:
 	void blankCheck(int x, int y);
 	void consolePrint(int, int);
 public:
-	MineSweeper(Player);
+	MineSweeper(Player&);
 	~MineSweeper();
 	
-	void run();
-	void saveData();
-	void help();
+	int run();
 };

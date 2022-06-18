@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Duel.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MineSweeper.cpp">
@@ -31,6 +32,7 @@
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Duel.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="MineSweeper.h" />
     <ClInclude Include="BlackJack.h" />

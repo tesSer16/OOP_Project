@@ -14,11 +14,10 @@ int BlackJack::doubleDown() {
 	if (user.coins < betting) {
 		cout << "You don't have enough coins!" << endl;
 		cin.get();
-		cin.get();
 		return 0;
 	}		
 
-	user.coins -= 10;
+	user.coins -= betting;
 	betting *= 2;
 	myCards.push_back(deck[deckIndex++]);
 	mySum = calSum(myCards);
@@ -192,7 +191,7 @@ int BlackJack::calSum(vector<Card> v) {
 	return sum;
 }
 
-BlackJack::BlackJack(Player u) : Game(u) {
+BlackJack::BlackJack(Player& u) : Game(u) {
 	betting = 0;
 	mySum = 0;
 	dealSum = 0;
@@ -209,7 +208,7 @@ BlackJack::~BlackJack() {
 	delete[] deck;
 }
 
-void BlackJack::run() {
+int BlackJack::run() {
 	// input betting
 	while (1) {
 		system("cls");
@@ -260,12 +259,6 @@ void BlackJack::run() {
 			break;
 		}
 	}
-}
 
-void BlackJack::saveData() {
-
-}
-
-void BlackJack::help() {
-
+	return user.coins;
 }

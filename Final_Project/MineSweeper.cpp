@@ -2,10 +2,10 @@
 
 using namespace std;
 
-MineSweeper::MineSweeper(Player u) : Game(u) {
+MineSweeper::MineSweeper(Player& u) : Game(u) {
 	// size input
 	while (1) {
-		cout << "Choose N that length of mine square 5 ~ 20 (ex: 4)" << endl;
+		cout << "Choose N that length of mine square 5 ~ 20 (ex: 8)" << endl;
 		cout << ">>> ";
 		cin >> size;
 		if (4 < size && size < 21)
@@ -14,21 +14,20 @@ MineSweeper::MineSweeper(Player u) : Game(u) {
 		cin.get();
 		cin.get();
 	}
-	
 
 	// initializing required arrays
 	board = new int* [size];
 	for (int i = 0; i < size; i++) {
-		board[i] = new int[size]{};
+		board[i] = new int[size] {};
 	}
 
 	checked = new int* [size];
 	for (int i = 0; i < size; i++) {
-		checked[i] = new int[size]{};
+		checked[i] = new int[size] {};
 	}
 
 	mineCount = size * size * 10 / 100;  // set number of mine to 10% of its size
-	mines = new tuple<int, int> [mineCount];
+	mines = new tuple<int, int>[mineCount];
 
 	// initialize timer
 	start = -1;
@@ -209,6 +208,8 @@ void MineSweeper::explode() {
 	cout << " MINE EXPLODED!!!..." << endl;
 	printSystem();
 	cout << " Press any button to try again." << endl;
+	cin.get();
+	cin.get();
 }
 
 void MineSweeper::clear(){
@@ -248,6 +249,15 @@ void MineSweeper::clear(){
 	cout << time;
 	setColor(15);
 	cout << " (s)" << endl;
+
+	printSystem();
+	cout << "You get ";
+	printNum(10);
+	cout << "coins!";
+	user.coins += 10;
+
+	cin.get();
+	cin.get();
 }
 
 void MineSweeper::check(int x, int y) {
@@ -255,7 +265,7 @@ void MineSweeper::check(int x, int y) {
 	checkCount++;
 }
 
-void MineSweeper::run() {
+int MineSweeper::run() {
 	// set mine
 	setMine();
 
@@ -310,7 +320,7 @@ void MineSweeper::run() {
 					else if (board[x][y] == -1) {
 						checked[x][y] = 1;
 						explode();
-						return;
+						return user.coins;
 					}
 					else check(x, y);
 					break;
@@ -332,12 +342,6 @@ void MineSweeper::run() {
 			}
 		}
 	}
-}
 
-void MineSweeper::saveData() {
-
-}
-
-void MineSweeper::help() {
-
+	return user.coins;
 }

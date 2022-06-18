@@ -1,0 +1,8 @@
+<MineSweeper>
+[How to win]
+Complete the board by avoiding the mines in the given board.
+You can choose 3 types and interact with each branch. (using direction keyboard)
+1 = Determine the number of mines around the point. If the point is a mine, it's immediately game over.
+2 = Raise the flag at the point where the mine is expected to be present.
+3 = Recall the flag that was built at the current point.
+Each point can detect mines in eight directions. Exceptionally, it detects only 5 mines in directions on the sides and 3 directions on the vertices. If you clear the game, you will get 10 coins.

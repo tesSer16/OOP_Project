@@ -1,0 +1,8 @@
+<BlackJack>
+[How to win]
+The first two cards will be given to you and the dealer, and the dealer's first card will not be disclosed. You win if the sum of the cards you have is higher than the sum of the dealers. However, if the sum of the cards exceeds 21, the game will be over immediately. (Burst) Also, if you record a blackjack, you win immediately and get a double and half coins. (x2.5)
+You can proceed with the turn by selecting 3 types. (using direction keyboard)
+1.Hit -> Pull one more card. You can hit continuously in a line not exceeding 21.
+2.Stand -> Exit the turn without drawing any more cards.
+3.doubleDown -> Double the current bet amount, receive one card, and close the turn.
+-Ace cards can be counted as 1 or 11.
